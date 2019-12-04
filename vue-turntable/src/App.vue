@@ -10,13 +10,11 @@
 </template>
 
 <script>
-import axios from './assets/js/axios'
+/* import axios from './assets/js/axios' */
 import Header from './components/Header'
 import Turntable from './components/Turntable'
 import Rule from './components/Rule'
 const json = require('../api/api.turntable.js')
-
-const CODE_SUCCESS = 100200
 
 export default {
   name: 'App',
@@ -54,10 +52,10 @@ export default {
       this.logo = json.logo
       this.rule = json.rule
       this.turntable = json.lottery
-      return
-
+      // return
       // 实际通过接口获取数据，本地也可借助 node 环境模拟接口
-      const activityId = this.getUrlParam('activity_id')
+      /* const activityId = this.getUrlParam('activity_id')
+      console.log(activityId)
       if (!activityId) {
         this.err = '链接地址参数错误'
         return
@@ -65,7 +63,7 @@ export default {
       const params = {activity_id: activityId}
       axios.get(this.apiUrl.json, {params}).then((res) => {
         res = res.data
-        if (res && res.code !== CODE_SUCCESS) {
+        if (res && res.code !== 100200) {
           this.err = '获取数据失败，请重试'
           return
         }
@@ -77,7 +75,7 @@ export default {
         document.querySelector('title').innerText = res.data.title || ''
       }, () => {
         this.err = '获取数据失败，请重试'
-      })
+      }) */
     }
   }
 }
