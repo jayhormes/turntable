@@ -1,6 +1,6 @@
 <template>
   <div class="rule-wrap">
-    <h2 class="title">活动规则</h2>
+    <h2 class="title">活動規則</h2>
     <div class="rule-con" v-html="rule"></div>
   </div>
 </template>

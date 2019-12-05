@@ -11,7 +11,7 @@
           <img class="img" :src="dialog.resultImg" alt=""/>
           <span class="text">{{dialog.resultText}}</span>
         </div>
-        <a href="javascript:void(null);" class="btn">{{dialog.destoryTime}}s 返回页面</a>
+        <a href="javascript:void(null);" class="btn">{{dialog.destoryTime}}s 返回頁面</a>
       </div>
     </transition>
   </div>
