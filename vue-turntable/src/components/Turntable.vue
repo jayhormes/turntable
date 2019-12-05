@@ -18,11 +18,48 @@
 <script>
 import Dialog from './Dialog'
 import { prefixStyle } from '../assets/js/dom'
+import { db } from '../assets/js/firebase'
 
 const transformCss = prefixStyle('transform-css')
 const transformJs = prefixStyle('transform-js')
 const transition = prefixStyle('transition')
 const transitionend = prefixStyle('transitionend')
+
+const fStore = db.firestore()
+let rateDict = {}
+let rateCheckedDict = {}
+let storageDict = {}
+
+var ref = fStore.collection('SpinAwards').doc('頭獎')
+ref.onSnapshot(doc => {
+  rateDict['頭獎'] = doc.data()['rate']
+  storageDict['頭獎'] = doc.data()['storage']
+})
+ref = fStore.collection('SpinAwards').doc('二獎')
+ref.onSnapshot(doc => {
+  rateDict['二獎'] = doc.data()['rate']
+  storageDict['二獎'] = doc.data()['storage']
+})
+ref = fStore.collection('SpinAwards').doc('三獎')
+ref.onSnapshot(doc => {
+  rateDict['三獎'] = doc.data()['rate']
+  storageDict['三獎'] = doc.data()['storage']
+})
+ref = fStore.collection('SpinAwards').doc('四獎')
+ref.onSnapshot(doc => {
+  rateDict['四獎'] = doc.data()['rate']
+  storageDict['四獎'] = doc.data()['storage']
+})
+ref = fStore.collection('SpinAwards').doc('五獎')
+ref.onSnapshot(doc => {
+  rateDict['五獎'] = doc.data()['rate']
+  storageDict['五獎'] = doc.data()['storage']
+})
+ref = fStore.collection('SpinAwards').doc('銘謝惠顧')
+ref.onSnapshot(doc => {
+  rateDict['銘謝惠顧'] = doc.data()['rate']
+  storageDict['銘謝惠顧'] = doc.data()['storage']
+})
 
 export default {
   props: {
@@ -60,6 +97,19 @@ export default {
   methods: {
     startRun () {
       this.isRunning = true
+      /*
+      fStore.collection('Message').add({
+        'author': {
+          'uid': 'this.user.uid',
+          'name': 'this.user.displayName',
+          'photoURL': 'this.user.photoURL',
+          'email': 'this.user.email'
+        },
+        'content': 1
+      })
+        .then(() => {
+          this.inputMessage = ''
+        }) */
 
       // 1.转盘匀速转动
       let transformDeg = this.$refs.turntable.style[transformJs]
@@ -71,19 +121,79 @@ export default {
         deg = deg % 360
         this.$refs.turntable.style[transformJs] = `rotate(${deg}deg)`
       }, 1)
+      /*
+      var ref = fStore.collection('SpinAwards').doc('頭獎')
+      ref.get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          console.log(doc.id, doc.data())
+        })
+      }) */
+      console.log(rateDict)
+      console.log(storageDict)
+      console.log(rateCheckedDict)
+
+      // Check storage and rate
+      rateCheckedDict['銘謝惠顧'] = Number(rateDict['銘謝惠顧'])
+      if (storageDict['頭獎'] > 0) {
+        rateCheckedDict['頭獎'] = Number(rateDict['頭獎'])
+      } else {
+        rateCheckedDict['頭獎'] = 0
+        rateCheckedDict['銘謝惠顧'] += Number(rateDict['頭獎'])
+      }
+      if (storageDict['二獎'] > 0) {
+        rateCheckedDict['二獎'] = Number(rateDict['二獎'])
+      } else {
+        rateCheckedDict['二獎'] = 0
+        rateCheckedDict['銘謝惠顧'] += Number(rateDict['二獎'])
+      }
+      if (storageDict['三獎'] > 0) {
+        rateCheckedDict['三獎'] = Number(rateDict['三獎'])
+      } else {
+        rateCheckedDict['三獎'] = 0
+        rateCheckedDict['銘謝惠顧'] += Number(rateDict['三獎'])
+      }
+      if (storageDict['四獎'] > 0) {
+        rateCheckedDict['四獎'] = Number(rateDict['四獎'])
+      } else {
+        rateCheckedDict['四獎'] = 0
+        rateCheckedDict['銘謝惠顧'] += Number(rateDict['四獎'])
+      }
+      if (storageDict['五獎'] > 0) {
+        rateCheckedDict['五獎'] = Number(rateDict['五獎'])
+      } else {
+        rateCheckedDict['五獎'] = 0
+        rateCheckedDict['銘謝惠顧'] += Number(rateDict['五獎'])
+      }
+
+      console.log(rateDict)
+      console.log(storageDict)
+      console.log(rateCheckedDict)
 
       // 2.随机生成中奖结果
       let randNum = parseInt(Math.random() * 100) + 1
+      console.log('randNum = ' + randNum)
       let count = 0
       this.turntable.map(item => {
+        /* console.log('rateDict[\'頭獎\'] = ' + rateDict['頭獎'])
+        console.log('item.award = ' + item.award)
+        console.log('rateDict[item.award] = ' + rateDict[item.award])
+        console.log('storageDict[item.award] = ' + storageDict[item.award])
+        console.log(rateDict)
+        console.log(storageDict) */
         item.min = count
-        count += Number(item.rate)
+        // count += Number(item.rate)
+        count += Number(rateCheckedDict[item.award])
         item.max = count
+        // console.log('item.min = ' + item.min)
+        // console.log('item.max = ' + item.max)
       })
+
       let randomRes = this.turntable.filter((item) => {
         return randNum > item.min && randNum <= item.max
       })[0]
       // 若中奖没有中奖图片，则为未中奖
+      console.log('randomRes.location ' + randomRes.location)
+      console.log('randomRes.type ' + randomRes.type)
       if (randomRes.type === this.turntableSuccess && !randomRes.result_img) {
         randomRes = this.turntable.filter((item) => Number(item.type) === this.turntableFail)[0]
       }
@@ -111,12 +221,20 @@ export default {
 
         // 5. 显示中奖结果
         if (Number(randomRes.type) === this.turntableSuccess) {
-          this.dialog.title = '中奖啦'
-          this.dialog.resultText = '请扫码领取'
-          this.dialog.destoryTime = 15
+          this.dialog.title = '🎉恭喜中獎🎉'
+          this.dialog.resultText = '您真是幸運小天使👍'
+          this.dialog.destoryTime = 3
+
+          var remainStorage = Number(storageDict[randomRes.award]) - 1
+          console.log('randomRes.award = ' + randomRes.award)
+          console.log('remainStorage = ' + remainStorage)
+          var ref = fStore.collection('SpinAwards').doc(randomRes.award)
+          ref.update({
+            storage: remainStorage
+          })
         } else {
-          this.dialog.title = '没抽中'
-          this.dialog.resultText = '真不巧，没抽中！'
+          this.dialog.title = '銘謝惠顧'
+          this.dialog.resultText = '謝謝您參與這次活動😊'
           this.dialog.destoryTime = 3
         }
         this.dialog.show = true
