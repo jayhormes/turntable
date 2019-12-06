@@ -184,8 +184,9 @@ export default {
         // count += Number(item.rate)
         count += Number(rateCheckedDict[item.award])
         item.max = count
-        // console.log('item.min = ' + item.min)
-        // console.log('item.max = ' + item.max)
+        console.log('award = ' + item.award)
+        console.log('item.min = ' + item.min)
+        console.log('item.max = ' + item.max)
       })
 
       let randomRes = this.turntable.filter((item) => {
@@ -221,8 +222,8 @@ export default {
 
         // 5. 显示中奖结果
         if (Number(randomRes.type) === this.turntableSuccess) {
-          this.dialog.title = '🎉恭喜中獎🎉'
-          this.dialog.resultText = '您真是幸運小天使👍'
+          this.dialog.title = '🎉恭喜中 ' + randomRes.award + ' 🎉'
+          this.dialog.resultText = randomRes.item
           this.dialog.destoryTime = 3
 
           var remainStorage = Number(storageDict[randomRes.award]) - 1
@@ -234,12 +235,13 @@ export default {
           })
         } else {
           this.dialog.title = '銘謝惠顧'
-          this.dialog.resultText = '謝謝您參與這次活動😊'
+          this.dialog.resultText = '加入line@掌握最新消息'
           this.dialog.destoryTime = 3
         }
         this.dialog.show = true
         this.dialog.resultImg = randomRes.result_img
-        this.$refs.dialog.countDown() // 倒计时
+        // this.$refs.dialog.countDown() // 倒计时
+        // this.$refs.dialog.doClick()
 
         setTimeout(() => {
           this.isRunning = false
@@ -370,7 +372,7 @@ export default {
       right: -118px;
       width: 180px;
       height: 140px;
-      background: url('../assets/img/decorate1.png') no-repeat 100% 100%;
+      background: url('') no-repeat 100% 100%;
       background-size: contain;
     }
     .decorate2 {
@@ -379,7 +381,7 @@ export default {
       left: -62px;
       width: 385px;
       height: 180px;
-      background: url('../assets/img/decorate2.png') no-repeat 100% 100%;
+      background: url('') no-repeat 100% 100%;
       background-size: contain;
     }
   }

@@ -27,7 +27,7 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    height: 600px;
+    height: 800px;
     background: url('../assets/img/header-bg.png') no-repeat 100% 100%;
     background-size: cover;
     .logo {
@@ -42,7 +42,7 @@ export default {
       margin: 0 auto;
       width: 800px;
       height: 100%;
-      background: url('../assets/img/header-title.png') no-repeat 100% 100%;
+      background: url('') no-repeat 100% 100%;
       background-size: cover;
     }
   }

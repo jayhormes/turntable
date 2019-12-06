@@ -3,7 +3,7 @@
     <template v-if="!err">
       <Header :logo="logo" />
       <Turntable :turntable="turntable"/>
-      <Rule :rule="rule"/>
+      <!-- <Rule :rule="rule"/> -->
     </template>
     <div class="err" v-else><span v-text="err"></span></div>
   </div>
@@ -92,7 +92,7 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
   height: 100%;
-  background-color: #e74143;
+  background-color: #fbc600;
   color: #fff;
   .err {
     display: flex;

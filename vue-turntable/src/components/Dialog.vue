@@ -11,7 +11,8 @@
           <img class="img" :src="dialog.resultImg" alt=""/>
           <span class="text">{{dialog.resultText}}</span>
         </div>
-        <a href="javascript:void(null);" class="btn">{{dialog.destoryTime}}s 返回頁面</a>
+        <!-- <a href="javascript:void(null);" class="btn" @click="dialog.show = false">{{dialog.destoryTime}}s 返回頁面</a> -->
+        <a href="javascript:void(null);" class="btn" @click="dialog.show = false">返回</a>
       </div>
     </transition>
   </div>
@@ -87,10 +88,10 @@ export default {
       background: #fff;
       border-radius: 3px;
       text-align: center;
-      color: $color-white;
+      color: #1a3163;
       .title {
         height: 80px;
-        color: $color-purple;
+        color: #1a3163;
         font-size: 36px;
         font-weight: 700;
         line-height: 80px;
@@ -119,7 +120,7 @@ export default {
         display: inline-block;
         margin: 25px auto;
         padding: 25px 35px;
-        background-color: $color-purple;
+        background-color: #1a3163;
         text-decoration: none;
         font-size: 24px;
         color: $color-white;
