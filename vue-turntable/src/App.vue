@@ -92,7 +92,7 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
   height: 100%;
-  background-color: #fbc600;
+  background-color: #2C9FD1;
   color: #fff;
   .err {
     display: flex;

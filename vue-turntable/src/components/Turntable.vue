@@ -222,7 +222,8 @@ export default {
 
         // 5. 显示中奖结果
         if (Number(randomRes.type) === this.turntableSuccess) {
-          this.dialog.title = '🎉恭喜中 ' + randomRes.award + ' 🎉'
+          // this.dialog.title = '🎉恭喜中 ' + randomRes.award + ' 🎉'
+          this.dialog.title = '🎉恭喜中' + '獎' + '🎉'
           this.dialog.resultText = randomRes.item
           this.dialog.destoryTime = 3
 
@@ -234,8 +235,8 @@ export default {
             storage: remainStorage
           })
         } else {
-          this.dialog.title = '銘謝惠顧'
-          this.dialog.resultText = '加入line@掌握最新消息'
+          this.dialog.title = '再接再厲 (鉛筆一隻) '
+          this.dialog.resultText = '加入line@拿好禮'
           this.dialog.destoryTime = 3
         }
         this.dialog.show = true
